@@ -13,12 +13,12 @@ export default [
       },
       {
         path: 'products',
-        name: 'Products',
+        name: 'ClientProducts',
         component: () => import(/* webpackChunkName: "Products" */ '../views/ProductsView.vue'),
       },
       {
         path: 'cart',
-        name: 'Cart',
+        name: 'ClientCart',
         component: () => import(/* webpackChunkName: "Cart" */ '../views/CartView.vue'),
       },
     ],
@@ -27,5 +27,17 @@ export default [
     path: '/admin',
     name: 'Admin',
     component: () => import(/* webpackChunkName: "DashBoard" */ '../views/DashBoard.vue'),
+    children: [
+      {
+        path: 'products',
+        name: 'AdminProducts',
+        component: () => import(/* webpackChunkName: "AdminProducts" */ '../views/AdminProducts.vue'),
+      },
+      {
+        path: 'coupon',
+        name: 'AdminCoupon',
+        component: () => import(/* webpackChunkName: "AdminCoupon" */ '../views/AdminCoupon.vue'),
+      },
+    ],
   },
 ];
