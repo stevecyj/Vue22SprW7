@@ -11,7 +11,9 @@
           <div class="card-body">
             <h5 class="card-title">{{ product.title }}</h5>
             <p class="card-text">{{ product.description }}</p>
-            <a href="#" class="btn btn-primary">Go somewhere</a>
+            <router-link :to="`/product/${product.id}`" class="btn btn-primary"
+              >Go somewhere</router-link
+            >
           </div>
         </div>
       </div>
@@ -31,9 +33,6 @@ export default {
       },
     };
   },
-  mounted() {
-    this.getProducts();
-  },
   methods: {
     getProducts() {
       this.$http
@@ -46,6 +45,9 @@ export default {
           console.log(err);
         });
     },
+  },
+  mounted() {
+    this.getProducts();
   },
 };
 </script>

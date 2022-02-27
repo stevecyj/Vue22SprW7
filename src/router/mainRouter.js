@@ -17,6 +17,11 @@ export default [
         component: () => import(/* webpackChunkName: "Products" */ '../views/ProductsView.vue'),
       },
       {
+        path: 'product/:id',
+        name: 'ClientProduct',
+        component: () => import(/* webpackChunkName: "Products */ '../views/ProductView.vue'),
+      },
+      {
         path: 'cart',
         name: 'ClientCart',
         component: () => import(/* webpackChunkName: "Cart" */ '../views/CartView.vue'),
