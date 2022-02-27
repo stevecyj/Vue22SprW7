@@ -1,6 +1,8 @@
 <template>
   <h2>單一產品</h2>
-  <div class="container"></div>
+  <div class="container">
+    {{ product }}
+  </div>
 </template>
 
 <script>
@@ -12,14 +14,16 @@ export default {
   },
   methods: {
     getProduct() {
+      // console.log(this.$route.params.id);
+      const { id } = this.$route.params;
       this.$http
-        .get(`${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/products/all`)
+        .get(`${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/product/${id}`)
         .then((res) => {
-          console.log(res);
-          this.products = res.data.products;
+          // console.log(res);
+          this.product = res.data.product;
         })
-        .catch((err) => {
-          console.log(err);
+        .catch(() => {
+          // console.log(err);
         });
     },
   },
