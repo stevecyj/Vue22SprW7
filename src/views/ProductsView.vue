@@ -2,7 +2,9 @@
   <h2>產品列表</h2>
   <!-- card -->
   <div class="container">
-    <div class="row">
+    <!-- row 決定內層的數量 -->
+    <div class="row row-cols-4">
+      <!-- 內層不定義寬度 -->
       <div v-for="product in products" :key="product.id" class="col">
         <div class="card" style="">
           <img src="" class="card-img-top" alt="..." />
