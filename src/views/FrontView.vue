@@ -1,4 +1,5 @@
 <template>
+  <!-- 頂部導覽 -->
   <FrontNavbar></FrontNavbar>
   <router-view></router-view>
   <!-- ProductsView -->
