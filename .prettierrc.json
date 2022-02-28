@@ -11,5 +11,6 @@
   "bracketSpacing": true,
   "jsxBracketSameLine": true,
   "attributeGroups": ["$DEFAULT", "^data-"],
-  "attributeSort": "ASC"
+  "attributeSort": "ASC",
+  "wrapAttributes": "force"
 }

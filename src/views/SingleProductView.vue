@@ -7,7 +7,7 @@
 
 <script>
 export default {
-  name: 'ProductView',
+  name: 'SingleProductView',
   data() {
     return {
       product: [],

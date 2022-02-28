@@ -61,10 +61,10 @@ export default {
           // mitt, get-cart
           emitter.emit('get-cart');
         })
-        .catch((err) => {
+        .catch(() => {
           // this.isLoading = false;
           // console.error(err.data.message);
-          this.alertError(err);
+          // this.alertError(err);
         });
     },
   },

@@ -1,3 +1,3 @@
 <template>
-  <h3>cart</h3>
+
 </template>
