@@ -35,6 +35,8 @@
   </nav>
 </template>
 <script>
+import emitter from '@/libs/emitter';
+
 export default {
   data() {
     return {
@@ -50,9 +52,11 @@ export default {
       this.$http
         .get(`${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/cart`)
         .then((res) => {
-          console.log('cart', res);
+          // console.log('cart', res);
           this.cartData = res.data.data;
           // this.isLoading = false;
+          // mitt, get-cart
+          emitter.emit('get-cart');
         })
         .catch((err) => {
           // this.isLoading = false;
@@ -63,6 +67,11 @@ export default {
   },
   mounted() {
     this.getCart();
+
+    // 監聽購物車資料，重新取得購物車
+    emitter.on('get-cart', () => {
+      this.getCart();
+    });
   },
 };
 </script>

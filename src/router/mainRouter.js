@@ -19,7 +19,7 @@ export default [
       {
         path: 'product/:id',
         name: 'ClientProduct',
-        component: () => import(/* webpackChunkName: "Products */ '../views/ProductView.vue'),
+        component: () => import(/* webpackChunkName: "Product" */ '../views/ProductView.vue'),
       },
       {
         path: 'cart',
@@ -36,7 +36,8 @@ export default [
       {
         path: 'products',
         name: 'AdminProducts',
-        component: () => import(/* webpackChunkName: "AdminProducts" */ '../views/AdminProducts.vue'),
+        component: () =>
+          import(/* webpackChunkName: "AdminProducts" */ '../views/AdminProducts.vue'),
       },
       {
         path: 'coupon',
