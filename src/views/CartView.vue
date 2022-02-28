@@ -78,8 +78,10 @@
     </div>
   </div>
 </template>
+
 <script>
 export default {
+  name: 'CartView',
   data() {
     return {
       cartData: {}, // cart 是拿整包資料

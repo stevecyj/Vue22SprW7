@@ -23,6 +23,7 @@
 
 <script>
 export default {
+  name: 'ProductsView',
   data() {
     return {
       products: [],

@@ -30,7 +30,7 @@ export default [
   },
   {
     path: '/admin',
-    name: 'Admin',
+    name: 'DashBoard',
     component: () => import(/* webpackChunkName: "DashBoard" */ '../views/DashBoard.vue'),
     children: [
       {

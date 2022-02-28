@@ -9,6 +9,7 @@
 import FrontNavbar from '@/components/FrontNavbar.vue';
 
 export default {
+  name: 'FrontView.vue',
   components: { FrontNavbar },
   data() {
     return {};
