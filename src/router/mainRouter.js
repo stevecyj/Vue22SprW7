@@ -2,6 +2,11 @@ import HomeView from '../views/HomeView.vue';
 
 export default [
   {
+    path: '/login',
+    name: 'Login',
+    component: () => import(/* webpackChunkName: "LoginView" */ '../views/LoginView.vue'),
+  },
+  {
     path: '/',
     name: 'FrontView',
     component: () => import(/* webpackChunkName: "FrontView" */ '../views/FrontView.vue'),

@@ -58,7 +58,7 @@ export default {
             this.$router.push('/login');
           });
       } else {
-        alert('請先登入');
+        // alert('請先登入');
         this.$router.push('/login');
       }
     },
