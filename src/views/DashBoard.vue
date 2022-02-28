@@ -26,6 +26,8 @@
           </li>
         </ul>
       </div>
+      <!-- 登出 -->
+      <button type="button" class="btn btn-primary" @click.prevent="signout">登出</button>
     </div>
   </nav>
   <router-view v-if="checkSuccess"></router-view>
@@ -61,6 +63,13 @@ export default {
         // alert('請先登入');
         this.$router.push('/login');
       }
+    },
+
+    // 登出
+    signout() {
+      document.cookie = 'hexToken=;expires=;';
+      alert('token 已清除');
+      this.$router.push('/login');
     },
   },
   mounted() {
