@@ -65,6 +65,17 @@
         </tr>
       </tbody>
     </table>
+    <!-- 購物車列表 -->
+    <div class="text-end">
+      <button
+        :class="{ disabled: this.cartData.carts?.length === 0 }"
+        class="btn btn-outline-danger"
+        type="button"
+        @click="clearCarts"
+      >
+        清空購物車
+      </button>
+    </div>
   </div>
 </template>
 <script>
@@ -92,6 +103,23 @@ export default {
         });
     },
 
+    // 取得購物車資料
+    getCart() {
+      // this.isLoading = true;
+      this.$http
+        .get(`${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/cart`)
+        .then((res) => {
+          console.log('cart', res);
+          this.cartData = res.data.data;
+          // this.isLoading = false;
+        })
+        .catch((err) => {
+          // this.isLoading = false;
+          // console.error(err.data.message);
+          this.alertError(err);
+        });
+    },
+
     // 加入購物車
     addToCart(id, qty = 1) {
       const data = {
@@ -103,17 +131,35 @@ export default {
         .post(`${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/cart`, {
           data,
         })
-        .then((res) => {
+        .then(() => {
           // console.log('addToCart', res);
-          this.alertSuccess(res.data.message);
+          // this.alertSuccess(res.data.message);
           this.getCart();
           // this.$refs.productModal.closeModal(); // 加入購物車後，關閉 modal
           this.isLoadingItem = '';
         })
         .catch((err) => {
           this.isLoadingItem = '';
-          // console.error(err.data.message);
-          this.alertError(err.data.message);
+          console.error(err);
+          // this.alertError(err);
+        });
+    },
+
+    // 清空購物車
+    clearCarts() {
+      // this.isLoading = true;
+      this.$http
+        .delete(`${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/carts`)
+        .then((res) => {
+          console.log('clearCarts', res);
+          // this.alertSuccess(res.data.message);
+          this.getCart();
+          // this.isLoading = false;
+        })
+        .catch((err) => {
+          // this.isLoading = false;
+          console.error(err);
+          // this.alertError(err.data.message);
         });
     },
   },

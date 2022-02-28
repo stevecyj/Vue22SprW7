@@ -26,6 +26,43 @@
           </li>
         </ul>
       </div>
+      <!-- 結帳 button, 顯示數量 -->
+      <button type="button" class="btn btn-primary">
+        結帳
+        <span class="badge rounded-pill bg-danger">{{ cartData.carts?.length }}</span>
+      </button>
     </div>
   </nav>
 </template>
+<script>
+export default {
+  data() {
+    return {
+      cartData: {
+        carts: [],
+      }, // cart 是拿整包資料
+    };
+  },
+  methods: {
+    // 取得購物車資料
+    getCart() {
+      // this.isLoading = true;
+      this.$http
+        .get(`${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/cart`)
+        .then((res) => {
+          console.log('cart', res);
+          this.cartData = res.data.data;
+          // this.isLoading = false;
+        })
+        .catch((err) => {
+          // this.isLoading = false;
+          // console.error(err.data.message);
+          this.alertError(err);
+        });
+    },
+  },
+  mounted() {
+    this.getCart();
+  },
+};
+</script>
