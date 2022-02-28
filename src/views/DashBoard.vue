@@ -40,13 +40,6 @@ export default {
         this.$router.push('/login');
       }
     },
-
-    // 登出
-    // signout() {
-    //   document.cookie = 'hexToken=;expires=;';
-    //   // alert('token 已清除');
-    //   this.$router.push('/login');
-    // },
   },
   mounted() {
     this.checkLogin();

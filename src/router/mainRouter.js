@@ -1,5 +1,3 @@
-import HomeView from '../views/HomeView.vue';
-
 export default [
   {
     path: '/login',
@@ -14,7 +12,7 @@ export default [
       {
         path: '/',
         name: 'Home',
-        component: HomeView,
+        component: () => import(/* webpackChunkName: "HomeView" */ '../views/HomeView.vue'),
       },
       {
         path: 'products',

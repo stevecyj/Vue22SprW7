@@ -24,6 +24,9 @@
           <li class="nav-item">
             <router-link class="nav-link" to="/cart">購物車</router-link>
           </li>
+          <li class="nav-item">
+            <router-link class="nav-link" to="/admin/products">回到後台</router-link>
+          </li>
         </ul>
       </div>
       <!-- 結帳 button, 顯示數量 -->
