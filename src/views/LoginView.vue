@@ -18,7 +18,7 @@
             <label for="password" class="form-label">password</label>
             <input id="password" v-model="user.password" type="password" class="form-control" />
           </div>
-          <button type="submit" class="btn btn-primary w-100" @click="signIn">登入</button>
+          <button type="submit" class="btn btn-primary w-100">登入</button>
         </form>
       </div>
     </div>
