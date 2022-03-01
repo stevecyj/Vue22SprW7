@@ -10,7 +10,7 @@
       >
         清空購物車
       </button>
-      <!-- test button -->
+      <!-- test swal button -->
       <!-- <button
         :class="{ disabled: this.cartData.carts?.length === 0 }"
         class="btn btn-outline-info"
@@ -19,6 +19,16 @@
       >
         swal
       </button> -->
+      <!-- test loading button -->
+      <button type="button" @click="testLoading">loading</button>
+      <!-- vue-loading-overlay start -->
+      <div class="vld-parent">
+        <!-- vue-loading-overlay -->
+        <Loading v-model:active="isLoading" :can-cancel="true" :is-full-page="fullPage">
+          <Spinner></Spinner>
+        </Loading>
+      </div>
+      <!-- vue-loading-overlay end -->
     </div>
   </div>
 </template>
@@ -26,15 +36,25 @@
 <script>
 import swalMixins from '@/mixins/swalMixins';
 
+import Loading from 'vue-loading-overlay';
+import 'vue-loading-overlay/dist/vue-loading.css';
+import Spinner from '@/components/LoadingOverlay/Spinner.vue';
+
 export default {
   name: 'CartView',
+  components: {
+    Loading,
+    Spinner,
+  },
   data() {
     return {
       cartData: {
         carts: [],
       }, // cart 是拿整包資料
       products: [],
-      isLoadingItem: '',
+      isLoadingItem: '', // bootstrap loading
+      isLoading: false, // vue-overlay loading
+      fullPage: true, // vue-overlay fullPage
     };
   },
   mixins: [swalMixins],
@@ -107,6 +127,14 @@ export default {
           // console.error(err.data.message);
           this.alertError(err);
         });
+    },
+
+    // test vue-loading-overlay
+    testLoading() {
+      this.isLoading = true;
+      setTimeout(() => {
+        this.isLoading = false;
+      }, 3000);
     },
   },
   mounted() {
