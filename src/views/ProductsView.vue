@@ -1,5 +1,5 @@
 <template>
-  <h2>購物車</h2>
+  <h2>產品列表</h2>
   <div class="container">
     <!-- 產品Modal -->
 
