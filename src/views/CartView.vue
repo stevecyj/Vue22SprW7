@@ -105,7 +105,7 @@
         </tr>
       </tfoot>
     </table>
-    <!-- csrt list end -->
+    <!-- cart list end -->
   </div>
 </template>
 
