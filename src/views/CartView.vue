@@ -1,6 +1,7 @@
 <template>
   <h3>購物車</h3>
   <div class="container">
+    <!-- 購物車列表 -->
     <div class="text-end">
       <button
         :class="{ disabled: this.cartData.carts?.length === 0 }"
@@ -21,14 +22,14 @@
       </button> -->
       <!-- test loading button -->
       <!-- <button type="button" @click="testLoading">loading</button> -->
-      <!-- vue-loading-overlay start -->
-      <div class="vld-parent">
-        <Loading v-model:active="isLoading" :can-cancel="true" :is-full-page="fullPage">
-          <Spinner></Spinner>
-        </Loading>
-      </div>
-      <!-- vue-loading-overlay end -->
     </div>
+    <!-- vue-loading-overlay start -->
+    <div class="vld-parent">
+      <Loading v-model:active="isLoading" :can-cancel="true" :is-full-page="fullPage">
+        <Spinner></Spinner>
+      </Loading>
+    </div>
+    <!-- vue-loading-overlay end -->
     <!-- cart list start -->
     <table class="table align-middle">
       <thead>
@@ -88,7 +89,7 @@
       </tbody>
       <tfoot>
         <tr>
-          <td class="text-end" colspan="3">總計</td>
+          <td class="text-end" colspan="4">總計</td>
           <td class="text-end">{{ cartData.total }} 元</td>
         </tr>
         <tr>
@@ -106,6 +107,99 @@
       </tfoot>
     </table>
     <!-- cart list end -->
+    <div class="my-5 row justify-content-center">
+      <!-- form start -->
+      <v-form ref="form" v-slot="{ errors }" class="col-md-6" @submit="submitOrder">
+        <!-- test error message -->
+        <!-- <span style="color: red">{{ errors }}</span> -->
+        <div class="mb-3">
+          <label class="form-label" for="email">Email</label>
+          <v-field
+            id="email"
+            v-model="form.user.email"
+            :class="{ 'is-invalid': errors['email'] }"
+            class="form-control"
+            name="email"
+            placeholder="請輸入 Email"
+            rules="email|required"
+            type="email"
+          ></v-field>
+          <error-message class="invalid-feedback" name="email"></error-message>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="name">收件人姓名</label>
+          <v-field
+            id="name"
+            v-model="form.user.name"
+            :class="{ 'is-invalid': errors['姓名'] }"
+            class="form-control"
+            name="姓名"
+            placeholder="請輸入姓名"
+            rules="required"
+            type="text"
+          ></v-field>
+          <error-message class="invalid-feedback" name="姓名"></error-message>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="tel">收件人電話</label>
+          <v-field
+            id="tel"
+            v-model="form.user.tel"
+            :class="{ 'is-invalid': errors['phone'] }"
+            :rules="isPhone"
+            class="form-control"
+            name="phone"
+            placeholder="請輸入手機(手機09XXXXXXXX，10位數字)"
+            type="tel"
+          ></v-field>
+          <error-message class="invalid-feedback" name="phone"></error-message>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="address">收件人地址</label>
+          <v-field
+            id="address"
+            v-model="form.user.address"
+            :class="{ 'is-invalid': errors['地址'] }"
+            class="form-control"
+            name="地址"
+            placeholder="請輸入地址"
+            rules="required"
+            type="text"
+          ></v-field>
+          <error-message class="invalid-feedback" name="地址"></error-message>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="message">留言</label>
+          <v-field
+            id="message"
+            v-model="form.message"
+            as="textarea"
+            class="form-control"
+            cols="30"
+            name="留言"
+            rows="10"
+          ></v-field>
+        </div>
+        <div class="text-end">
+          <!-- {{Object.keys(errors).length}} -->
+          <!-- 逆天可選運算子 -->
+          <button
+            :class="{
+              disabled: this.cartData.carts?.length === 0 || Object.keys(errors).length !== 0,
+            }"
+            class="btn btn-danger"
+            type="submit"
+          >
+            送出訂單
+          </button>
+        </div>
+      </v-form>
+      <!-- form end -->
+    </div>
   </div>
 </template>
 
@@ -132,6 +226,16 @@ export default {
       isLoadingItem: '', // bootstrap loading
       isLoading: false, // vue-overlay loading
       fullPage: true, // vue-overlay fullPage
+      productId: '',
+      form: {
+        user: {
+          name: '',
+          email: '',
+          tel: '',
+          address: '',
+        },
+        message: '',
+      },
     };
   },
   mixins: [swalMixins],
@@ -223,6 +327,34 @@ export default {
           // console.error(err.data.message);
           this.alertError(err);
         });
+    },
+
+    // 送出訂單
+    submitOrder() {
+      const data = this.form;
+      this.isLoading = true;
+      this.$http
+        .post(`${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/order`, {
+          data,
+        })
+        .then((res) => {
+          // console.log('submitOrder', res);
+          this.$refs.form.resetForm();
+          this.alertSuccess(res.data.message);
+          this.getCart();
+          this.isLoading = false;
+        })
+        .catch((err) => {
+          this.isLoading = false;
+          // console.error(err.data.message);
+          this.alertError(err.data.message);
+        });
+    },
+
+    // validate rule for phone
+    isPhone(value) {
+      const phoneNumber = /^(09)[0-9]{8}$/;
+      return phoneNumber.test(value) ? true : '請填寫正確的手機號碼';
     },
 
     // test vue-loading-overlay
