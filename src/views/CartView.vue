@@ -304,6 +304,7 @@ export default {
         .delete(`${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/cart/${id}`)
         .then((res) => {
           // console.log('removeCartItem', res);
+          emitter.emit('get-cart');
           this.alertSuccess(res.data.message);
           this.getCart();
           this.isLoading = false;
@@ -371,6 +372,7 @@ export default {
           // console.log('submitOrder', res);
           this.$refs.form.resetForm();
           this.alertSuccess(res.data.message);
+          emitter.emit('get-cart');
           this.getCart();
           this.isLoading = false;
         })
