@@ -5,6 +5,17 @@
 
     <!-- <product-modal :id="productId" ref="productModal" @add-cart="addToCart">
       </product-modal> -->
+    <div
+      id="productModal"
+      ref="ProductModal"
+      class="modal fade"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <ProductModal :ProductModal="ProductModal" :product="product"></ProductModal>
+    </div>
     <!-- 產品Modal -->
 
     <table class="table align-middle">
@@ -41,7 +52,7 @@
               <button
                 class="btn btn-outline-secondary"
                 type="button"
-                @click="$router.push({ path: `/product/${product.id}` })"
+                @click="openProductModal(product.id)"
               >
                 <!-- only use for openProductModal -->
                 <!-- <i class="fas fa-spinner fa-pulse"></i> -->
@@ -81,17 +92,32 @@
 
 <script>
 import emitter from '@/libs/emitter';
+import ProductModal from '@/components/ProductModal.vue';
+import BsModal from 'bootstrap/js/dist/modal';
 
 export default {
   name: 'CartView',
+  components: { ProductModal },
   data() {
     return {
       cartData: {}, // cart 是拿整包資料
       products: [],
+      product: {}, // 單一產品
+      productId: '',
+      ProductModal: '',
       isLoadingItem: '',
+      qty: '',
     };
   },
   methods: {
+    // 開啟查看更多
+    openProductModal(id) {
+      // console.log(id);
+      this.productId = id;
+      this.getSingleProduct();
+      this.openModal();
+    },
+
     getProducts() {
       this.$http
         .get(`${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/products/all`, {})
@@ -104,6 +130,25 @@ export default {
           this.isLoading = false;
           // console.error(err.response);
           this.alertError(err.data.message);
+        });
+    },
+
+    // 取得單一產品資料
+    getSingleProduct() {
+      this.isLoading = true;
+      // api for 取得單一品項資料
+      // const apiUrl = `/v2/api/${apiPath}/product/${this.id}`;
+
+      this.$http
+        .get(`${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/product/${this.productId}`)
+        .then((res) => {
+          console.log(res);
+          this.isLoading = false;
+          this.product = res.data.product;
+        })
+        .catch((err) => {
+          this.isLoading = false;
+          console.error(err.response);
         });
     },
 
@@ -168,9 +213,17 @@ export default {
           // this.alertError(err.data.message);
         });
     },
+
+    // open modal
+    openModal() {
+      this.ProductModal.show();
+    },
   },
   mounted() {
     this.getProducts();
+    // console.log(new BsModal(this.$refs.productModal));
+    this.ProductModal = new BsModal(this.$refs.ProductModal);
+    // console.log(this.productModal);
   },
 };
 </script>

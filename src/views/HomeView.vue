@@ -12,7 +12,7 @@
             <h5 class="card-title">{{ product.title }}</h5>
             <p class="card-text">{{ product.description }}</p>
             <router-link :to="`/product/${product.id}`" class="btn btn-primary"
-              >Go somewhere</router-link
+              >詳細資料</router-link
             >
           </div>
         </div>

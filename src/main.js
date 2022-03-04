@@ -14,11 +14,11 @@ import { createApp } from 'vue';
 import axios from 'axios';
 import VueAxios from 'vue-axios';
 
-import App from './App.vue';
-import router from './router';
-
 import 'bootstrap';
 import '@/assets/scss/index.scss';
+
+import App from './App.vue';
+import router from './router';
 
 // 定義驗證規則(eslint decide code block order)
 Object.keys(AllRules).forEach((rule) => {
