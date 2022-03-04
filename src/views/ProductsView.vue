@@ -66,7 +66,7 @@
       </tbody>
     </table>
     <!-- 購物車列表 -->
-    <div class="text-end">
+    <!-- <div class="text-end">
       <button
         :class="{ disabled: this.cartData.carts?.length === 0 }"
         class="btn btn-outline-danger"
@@ -75,7 +75,7 @@
       >
         清空購物車
       </button>
-    </div>
+    </div> -->
   </div>
 </template>
 

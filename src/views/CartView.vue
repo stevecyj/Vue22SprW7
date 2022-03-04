@@ -82,7 +82,7 @@
               <small v-if="cartData.final_total !== cartData.total" class="text-success"
                 >折扣價：</small
               >
-              {{ cartData.final_total }} 元
+              {{ item.product.price * item.qty }} 元
             </td>
           </tr>
         </template>
@@ -90,7 +90,7 @@
       <tfoot>
         <tr>
           <td class="text-end" colspan="3">總計</td>
-          <td class="text-end">{{ cartData.total }} 元</td>
+          <td class="text-end">{{ cartData.final_total }} 元</td>
         </tr>
         <tr>
           <td
@@ -315,22 +315,47 @@ export default {
         });
     },
 
+    // 更新購物車, PUT
+    updateCartItem(item) {
+      // const apiUrl = `/v2/api/${apiPath}/cart/${item.id}`; // 這裡從整包物件裡拿 id(cart id)
+      const data = {
+        product_id: item.product_id, // product id
+        qty: item.qty,
+      };
+      this.isLoadingItem = item.id;
+      this.$http
+        .put(`${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/cart/${item.id}`, {
+          data,
+        })
+        .then((res) => {
+          // console.log('updateCartItem', item.id, res.data.data);
+          this.alertSuccess(res.data.message);
+          this.getCart();
+          this.isLoadingItem = '';
+        })
+        .catch((err) => {
+          this.isLoadingItem = '';
+          // console.error(err.data.message);
+          this.alertError(err.data.message);
+        });
+    },
+
     // 清空購物車
     clearCarts() {
-      // this.isLoading = true;
+      this.isLoading = true;
       this.$http
         .delete(`${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/carts`)
         .then((res) => {
           console.log('clearCarts', res);
-          // this.alertSuccess(res.data.message);
+          this.alertSuccess(res.data.message);
           emitter.emit('get-cart');
           this.getCart();
-          // this.isLoading = false;
+          this.isLoading = false;
         })
         .catch((err) => {
-          // this.isLoading = false;
+          this.isLoading = false;
           console.error(err);
-          // this.alertError(err.data.message);
+          this.alertError(err.data.message);
         });
     },
 
