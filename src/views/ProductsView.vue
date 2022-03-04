@@ -41,7 +41,7 @@
               <button
                 class="btn btn-outline-secondary"
                 type="button"
-                @click="openProductModal(product.id)"
+                @click="$router.push({ path: `/product/${product.id}` })"
               >
                 <!-- only use for openProductModal -->
                 <!-- <i class="fas fa-spinner fa-pulse"></i> -->
