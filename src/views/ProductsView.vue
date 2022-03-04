@@ -80,6 +80,8 @@
 </template>
 
 <script>
+import emitter from '@/libs/emitter';
+
 export default {
   name: 'CartView',
   data() {
@@ -137,6 +139,7 @@ export default {
           // console.log('addToCart', res);
           // this.alertSuccess(res.data.message);
           this.getCart();
+          emitter.emit('get-cart');
           // this.$refs.productModal.closeModal(); // 加入購物車後，關閉 modal
           this.isLoadingItem = '';
         })
@@ -155,6 +158,7 @@ export default {
         .then((res) => {
           console.log('clearCarts', res);
           // this.alertSuccess(res.data.message);
+          emitter.emit('get-cart');
           this.getCart();
           // this.isLoading = false;
         })

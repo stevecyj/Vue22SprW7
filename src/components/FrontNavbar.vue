@@ -58,8 +58,6 @@ export default {
           // console.log('cart', res);
           this.cartData = res.data.data;
           // this.isLoading = false;
-          // mitt, get-cart
-          emitter.emit('get-cart');
         })
         .catch(() => {
           // this.isLoading = false;

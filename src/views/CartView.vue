@@ -45,8 +45,8 @@
           <tr v-for="item in cartData.carts" :key="item.id">
             <td>
               <button
-                class="btn btn-outline-danger btn-sm"
                 type="button"
+                class="btn btn-outline-danger btn-sm"
                 @click="removeCartItem(item.id)"
               >
                 <!-- <i v-show="isLoadingItem === item.id" class="fas fa-spinner fa-pulse"></i> -->
@@ -89,7 +89,7 @@
       </tbody>
       <tfoot>
         <tr>
-          <td class="text-end" colspan="4">總計</td>
+          <td class="text-end" colspan="3">總計</td>
           <td class="text-end">{{ cartData.total }} 元</td>
         </tr>
         <tr>
@@ -205,6 +205,7 @@
 
 <script>
 import swalMixins from '@/mixins/swalMixins';
+import emitter from '@/libs/emitter';
 
 // vue-loading-overlay
 import Loading from 'vue-loading-overlay';
@@ -316,16 +317,20 @@ export default {
 
     // 清空購物車
     clearCarts() {
+      // this.isLoading = true;
       this.$http
-        .delete(`${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/cart`)
-        .then(() => {
-          // console.log('clearCarts', res);
+        .delete(`${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/carts`)
+        .then((res) => {
+          console.log('clearCarts', res);
+          // this.alertSuccess(res.data.message);
+          emitter.emit('get-cart');
           this.getCart();
+          // this.isLoading = false;
         })
         .catch((err) => {
           // this.isLoading = false;
-          // console.error(err.data.message);
-          this.alertError(err);
+          console.error(err);
+          // this.alertError(err.data.message);
         });
     },
 
@@ -358,12 +363,12 @@ export default {
     },
 
     // test vue-loading-overlay
-    testLoading() {
-      this.isLoading = true;
-      setTimeout(() => {
-        this.isLoading = false;
-      }, 3000);
-    },
+    // testLoading() {
+    //   this.isLoading = true;
+    //   setTimeout(() => {
+    //     this.isLoading = false;
+    //   }, 3000);
+    // },
   },
   mounted() {
     this.getCart();
