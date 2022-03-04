@@ -299,7 +299,7 @@ export default {
     // 移除購物車
     removeCartItem(id) {
       this.isLoading = true;
-      console.log(`item id: ${id}`, `isLoadingItem: ${this.isLoadingItem}`);
+      // console.log(`item id: ${id}`, `isLoadingItem: ${this.isLoadingItem}`);
       this.$http
         .delete(`${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/cart/${id}`)
         .then((res) => {
@@ -347,7 +347,7 @@ export default {
       this.$http
         .delete(`${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/carts`)
         .then((res) => {
-          console.log('clearCarts', res);
+          // console.log('clearCarts', res);
           this.alertSuccess(res.data.message);
           emitter.emit('get-cart');
           this.getCart();

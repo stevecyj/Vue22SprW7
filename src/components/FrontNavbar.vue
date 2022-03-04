@@ -21,19 +21,21 @@
           <li class="nav-item">
             <router-link class="nav-link" to="/products">產品列表</router-link>
           </li>
-          <li class="nav-item">
+          <!-- <li class="nav-item">
             <router-link class="nav-link" to="/cart">購物車</router-link>
-          </li>
+          </li> -->
           <li class="nav-item">
             <router-link class="nav-link" to="/admin/products">回到後台</router-link>
           </li>
         </ul>
       </div>
       <!-- 結帳 button, 顯示數量 -->
-      <button type="button" class="btn btn-primary">
-        結帳
-        <span class="badge rounded-pill bg-danger">{{ cartData.carts?.length }}</span>
-      </button>
+      <router-link to="/cart">
+        <button type="button" class="btn btn-primary">
+          結帳
+          <span class="badge rounded-pill bg-danger">{{ cartData.carts?.length }}</span>
+        </button>
+      </router-link>
     </div>
   </nav>
 </template>
