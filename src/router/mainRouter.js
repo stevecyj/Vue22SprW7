@@ -50,4 +50,9 @@ export default [
       },
     ],
   },
+  {
+    path: '/:pathMatch(.*)*',
+    name: 'NotFound',
+    component: () => import(/* webpackChunkName: "NotFound" */ '../views/NotFound.vue'),
+  },
 ];
