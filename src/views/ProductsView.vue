@@ -1,22 +1,17 @@
 <template>
   <h2>產品列表</h2>
   <div class="container">
-    <!-- 產品Modal -->
+    <!-- 產品 check more Modal -->
+    <ProductModal ref="checkMore" :product="product" @add-to-cart="addToCart"></ProductModal>
+    <!-- 產品 check more Modal -->
 
-    <!-- <product-modal :id="productId" ref="productModal" @add-cart="addToCart">
-      </product-modal> -->
-    <div
-      id="productModal"
-      ref="ProductModal"
-      class="modal fade"
-      tabindex="-1"
-      role="dialog"
-      aria-labelledby="exampleModalLabel"
-      aria-hidden="true"
-    >
-      <ProductModal :ProductModal="ProductModal" :product="product"></ProductModal>
+    <!-- vue-loading-overlay start -->
+    <div class="vld-parent">
+      <Loading v-model:active="isLoading" :can-cancel="true" :is-full-page="fullPage">
+        <Spinner></Spinner>
+      </Loading>
     </div>
-    <!-- 產品Modal -->
+    <!-- vue-loading-overlay end -->
 
     <table class="table align-middle">
       <thead>
@@ -76,30 +71,31 @@
         </tr>
       </tbody>
     </table>
-    <!-- 購物車列表 -->
-    <!-- <div class="text-end">
-      <button
-        :class="{ disabled: this.cartData.carts?.length === 0 }"
-        class="btn btn-outline-danger"
-        type="button"
-        @click="clearCarts"
-      >
-        清空購物車
-      </button>
-    </div> -->
   </div>
 </template>
 
 <script>
+import swalMixins from '@/mixins/swalMixins';
+
 import emitter from '@/libs/emitter';
 import ProductModal from '@/components/ProductModal.vue';
-import BsModal from 'bootstrap/js/dist/modal';
+
+// vue-loading-overlay
+import Loading from 'vue-loading-overlay';
+import 'vue-loading-overlay/dist/vue-loading.css';
+import Spinner from '@/components/LoadingOverlay/Spinner.vue';
 
 export default {
-  name: 'CartView',
-  components: { ProductModal },
+  name: 'ProductsView',
+  components: {
+    ProductModal,
+    Loading,
+    Spinner,
+  },
   data() {
     return {
+      isLoading: false, // vue-overlay loading
+      fullPage: true, // vue-overlay fullPage
       cartData: {}, // cart 是拿整包資料
       products: [],
       product: {}, // 單一產品
@@ -109,6 +105,7 @@ export default {
       qty: '',
     };
   },
+  mixins: [swalMixins],
   methods: {
     // 開啟查看更多
     openProductModal(id) {
@@ -142,9 +139,9 @@ export default {
       this.$http
         .get(`${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/product/${this.productId}`)
         .then((res) => {
-          console.log(res);
-          this.isLoading = false;
+          // console.log(res);
           this.product = res.data.product;
+          this.isLoading = false;
         })
         .catch((err) => {
           this.isLoading = false;
@@ -154,18 +151,15 @@ export default {
 
     // 取得購物車資料
     getCart() {
-      // this.isLoading = true;
       this.$http
         .get(`${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/cart`)
         .then((res) => {
           // console.log('cart', res);
           this.cartData = res.data.data;
-          // this.isLoading = false;
         })
         .catch((err) => {
-          // this.isLoading = false;
-          // console.error(err.data.message);
-          this.alertError(err);
+          console.error(err.data.message);
+          // this.alertError(err);
         });
     },
 
@@ -175,55 +169,44 @@ export default {
         product_id: id,
         qty,
       };
-      this.isLoadingItem = id;
+      this.isLoading = true;
       this.$http
         .post(`${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/cart`, {
           data,
         })
-        .then(() => {
-          // console.log('addToCart', res);
-          // this.alertSuccess(res.data.message);
-          this.getCart();
-          emitter.emit('get-cart');
-          // this.$refs.productModal.closeModal(); // 加入購物車後，關閉 modal
-          this.isLoadingItem = '';
-        })
-        .catch((err) => {
-          this.isLoadingItem = '';
-          console.error(err);
-          // this.alertError(err);
-        });
-    },
-
-    // 清空購物車
-    clearCarts() {
-      // this.isLoading = true;
-      this.$http
-        .delete(`${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/carts`)
         .then((res) => {
-          console.log('clearCarts', res);
-          // this.alertSuccess(res.data.message);
-          emitter.emit('get-cart');
+          // console.log('addToCart', res);
+          this.isLoading = false;
           this.getCart();
-          // this.isLoading = false;
+          emitter.emit('get-cart');
+          this.$refs.checkMore.ProductModal.hide(); // 加入購物車後，關閉 modal
+          return res;
+        })
+        .then((res) => {
+          // console.log(res);
+          this.alertSuccess(res.data.message);
         })
         .catch((err) => {
-          // this.isLoading = false;
+          this.isLoading = false;
           console.error(err);
-          // this.alertError(err.data.message);
+          this.alertError(err);
         });
     },
 
     // open modal
     openModal() {
-      this.ProductModal.show();
+      console.log('*** show check more modal now ***');
+      this.$refs.checkMore.ProductModal.show();
+    },
+
+    // test emit
+    testEmit(id, qty) {
+      console.log('testEmit', id, qty);
+      this.isLoading = true;
     },
   },
   mounted() {
     this.getProducts();
-    // console.log(new BsModal(this.$refs.productModal));
-    this.ProductModal = new BsModal(this.$refs.ProductModal);
-    // console.log(this.productModal);
   },
 };
 </script>

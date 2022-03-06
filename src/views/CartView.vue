@@ -241,20 +241,20 @@ export default {
   },
   mixins: [swalMixins],
   methods: {
-    getProducts() {
-      this.$http
-        .get(`${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/products/all`)
-        .then((res) => {
-          // console.log(res);
-          this.isLoading = false;
-          this.products = res.data.products;
-        })
-        .catch((err) => {
-          this.isLoading = false;
-          console.error(err.response);
-          // this.alertError(err.data.message);
-        });
-    },
+    // getProducts() {
+    //   this.$http
+    //     .get(`${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/products/all`)
+    //     .then((res) => {
+    //       // console.log(res);
+    //       this.isLoading = false;
+    //       this.products = res.data.products;
+    //     })
+    //     .catch((err) => {
+    //       this.isLoading = false;
+    //       console.error(err.response);
+    //       // this.alertError(err.data.message);
+    //     });
+    // },
 
     // 取得購物車資料
     getCart() {
