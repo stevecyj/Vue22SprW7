@@ -172,7 +172,7 @@ export default {
     addToCart(id, qty = 1) {
       const data = {
         product_id: id,
-        qty,
+        qty: Number(qty), // ✨✨ 確認 qty 是數字，api 有 check 型別
       };
       this.isLoading = true;
       this.$http

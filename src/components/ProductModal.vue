@@ -40,10 +40,23 @@
               <div>
                 <!-- 輸入框，產品數量 -->
                 <div class="input-group">
-                  <input v-model="qty" type="number" class="form-control" min="1" />
-                  <button type="button" class="btn btn-primary" @click="addToCart">
-                    加入購物車
-                  </button>
+                  <v-form v-slot="{ values, errors }" class="input-group">
+                    <v-field
+                      v-model="qty"
+                      :class="{ 'is-invalid': errors['數量'] }"
+                      class="form-control"
+                      min="1"
+                      max="20"
+                      name="數量"
+                      rules="between:1,20"
+                      type="number"
+                      @update:modelValue="values.數量 = Number(values.數量)"
+                    />
+                    <error-message class="invalid-feedback" name="數量"></error-message>
+                    <button type="button" class="btn btn-primary" @click="addToCart">
+                      加入購物車
+                    </button>
+                  </v-form>
                 </div>
               </div>
             </div>
