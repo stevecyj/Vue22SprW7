@@ -63,7 +63,7 @@ export default {
   data() {
     return {
       qty: 1,
-      ProductModal: '',
+      ProductModal: {},
       tempObj: {},
     };
   },
@@ -85,6 +85,10 @@ export default {
 
   mounted() {
     this.ProductModal = new BsModal(this.$refs.ProductModal);
+    this.$refs.ProductModal.addEventListener('hidden.bs.modal', () => {
+      this.$emit('clear-single-product');
+      this.qty = 1;
+    });
   },
 };
 </script>

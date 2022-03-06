@@ -2,7 +2,12 @@
   <h2>產品列表</h2>
   <div class="container">
     <!-- 產品 check more Modal -->
-    <ProductModal ref="checkMore" :product="product" @add-to-cart="addToCart"></ProductModal>
+    <ProductModal
+      ref="checkMore"
+      :product="product"
+      @add-to-cart="addToCart"
+      @clear-single-product="clearSingleProduct"
+    ></ProductModal>
     <!-- 產品 check more Modal -->
 
     <!-- vue-loading-overlay start -->
@@ -193,9 +198,15 @@ export default {
         });
     },
 
+    // 清除 modal 單筆購物車資料
+    clearSingleProduct() {
+      // console.log('*** clearSingleProduct ***');
+      this.product = {};
+    },
+
     // open modal
     openModal() {
-      console.log('*** show check more modal now ***');
+      // console.log('*** show check more modal now ***');
       this.$refs.checkMore.ProductModal.show();
     },
 
