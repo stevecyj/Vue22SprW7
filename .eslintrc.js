@@ -30,5 +30,6 @@ module.exports = {
         alphabetical: false,
       },
     ],
+    'operator-linebreak': ['error', 'after'],
   },
 };

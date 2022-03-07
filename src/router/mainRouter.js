@@ -49,6 +49,12 @@ export default [
           import(/* webpackChunkName: "AdminProducts" */ '../views/BackStage/AdminProducts.vue'),
       },
       {
+        path: 'orders',
+        name: 'AdminOrders',
+        component: () =>
+          import(/* webpackChunkName: "AdminOrders" */ '../views/BackStage/Orders.vue'),
+      },
+      {
         path: 'coupon',
         name: 'AdminCoupon',
         component: () =>

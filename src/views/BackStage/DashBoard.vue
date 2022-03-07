@@ -1,16 +1,28 @@
 <template>
   <!-- 頂部導覽 -->
   <AdminNavbar></AdminNavbar>
+  <ToastMessages></ToastMessages>
   <router-view v-if="checkSuccess"></router-view>
 </template>
 
 <script>
 import AdminNavbar from '@/components/AdminNavbar.vue';
+import emitter from '@/libs/emitter'; // 使用 provide
+import $httpMessageState from '@/libs/pushMessageState';
+import ToastMessages from '@/components/ToastMessages.vue';
 
 export default {
   name: 'DashBoard',
   components: {
     AdminNavbar,
+    ToastMessages,
+  },
+  // 使用 provide
+  provide() {
+    return {
+      emitter,
+      $httpMessageState,
+    };
   },
   data() {
     return {

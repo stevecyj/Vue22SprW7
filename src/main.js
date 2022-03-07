@@ -17,9 +17,14 @@ import { createApp } from 'vue';
 import axios from 'axios';
 import VueAxios from 'vue-axios';
 
+// for api response message
+// import $httpMessageState from '@/libs/pushMessageState';
+
+// for filter
+import { date, currency } from './libs/filters';
+
 import App from './App.vue';
 import router from './router';
-import { date, currency } from './libs/filters';
 
 // 定義驗證規則(eslint decide code block order)
 Object.keys(AllRules).forEach((rule) => {
