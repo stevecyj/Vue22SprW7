@@ -2,7 +2,7 @@
 
 ## github page
 
-[page](https://stevecyj.github.io/Vue22SprW6/)
+[page](https://stevecyj.github.io/Vue22SprW7/)
 
 ## Project setup
 
