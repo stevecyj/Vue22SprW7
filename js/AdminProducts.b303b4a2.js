@@ -1,0 +1,2 @@
+(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([["AdminProducts"],{de1c:function(n,e,c){"use strict";c.r(e);var t=c("7a23");function o(n,e){return Object(t["openBlock"])(),Object(t["createElementBlock"])("h2",null,"後台產品列表")}var r=c("6b0d"),d=c.n(r);const u={},a=d()(u,[["render",o]]);e["default"]=a}}]);
+//# sourceMappingURL=AdminProducts.b303b4a2.js.map
