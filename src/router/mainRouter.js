@@ -7,46 +7,52 @@ export default [
   {
     path: '/',
     name: 'FrontView',
-    component: () => import(/* webpackChunkName: "FrontView" */ '../views/FrontView.vue'),
+    component: () =>
+      import(/* webpackChunkName: "FrontView" */ '../views/FrontStage/FrontView.vue'),
     children: [
       {
         path: '/',
         name: 'Home',
-        component: () => import(/* webpackChunkName: "HomeView" */ '../views/HomeView.vue'),
+        component: () =>
+          import(/* webpackChunkName: "HomeView" */ '../views/FrontStage/HomeView.vue'),
       },
       {
         path: 'products',
         name: 'ClientProducts',
-        component: () => import(/* webpackChunkName: "Products" */ '../views/ProductsView.vue'),
+        component: () =>
+          import(/* webpackChunkName: "Products" */ '../views/FrontStage/ProductsView.vue'),
       },
       {
         path: 'product/:id',
         name: 'ClientProduct',
         component: () =>
-          import(/* webpackChunkName: "SingleProduct" */ '../views/SingleProductView.vue'),
+          import(
+            /* webpackChunkName: "SingleProduct" */ '../views/FrontStage/SingleProductView.vue'
+          ),
       },
       {
         path: 'cart',
         name: 'ClientCart',
-        component: () => import(/* webpackChunkName: "Cart" */ '../views/CartView.vue'),
+        component: () => import(/* webpackChunkName: "Cart" */ '../views/FrontStage/CartView.vue'),
       },
     ],
   },
   {
     path: '/admin',
     name: 'DashBoard',
-    component: () => import(/* webpackChunkName: "DashBoard" */ '../views/DashBoard.vue'),
+    component: () => import(/* webpackChunkName: "DashBoard" */ '../views/BackStage/DashBoard.vue'),
     children: [
       {
         path: 'products',
         name: 'AdminProducts',
         component: () =>
-          import(/* webpackChunkName: "AdminProducts" */ '../views/AdminProducts.vue'),
+          import(/* webpackChunkName: "AdminProducts" */ '../views/BackStage/AdminProducts.vue'),
       },
       {
         path: 'coupon',
         name: 'AdminCoupon',
-        component: () => import(/* webpackChunkName: "AdminCoupon" */ '../views/AdminCoupon.vue'),
+        component: () =>
+          import(/* webpackChunkName: "AdminCoupon" */ '../views/BackStage/AdminCoupon.vue'),
       },
     ],
   },
