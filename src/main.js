@@ -19,6 +19,7 @@ import VueAxios from 'vue-axios';
 
 import App from './App.vue';
 import router from './router';
+import { date, currency } from './libs/filters';
 
 // 定義驗證規則(eslint decide code block order)
 Object.keys(AllRules).forEach((rule) => {
@@ -35,6 +36,11 @@ veeValidate.configure({
 setLocale('zh_TW');
 
 const app = createApp(App);
+app.config.globalProperties.$filters = {
+  date,
+  currency,
+};
+
 app.use(router);
 app.use(VueAxios, axios);
 

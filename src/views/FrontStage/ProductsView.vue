@@ -40,11 +40,11 @@
           <td>{{ product.title }}</td>
           <td>
             <div v-if="product.price === product.origin_price" class="h5">
-              {{ product.price }} 元
+              {{ $filters.currency(product.price) }} 元
             </div>
             <div v-else>
-              <del class="h6">原價 {{ product.origin_price }} 元</del>
-              <div class="h5">現在只要 {{ product.price }} 元</div>
+              <del class="h6">原價 {{ $filters.currency(product.origin_price) }} 元</del>
+              <div class="h5">現在只要 {{ $filters.currency(product.price) }} 元</div>
             </div>
           </td>
           <td>
