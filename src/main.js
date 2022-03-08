@@ -1,6 +1,9 @@
 // 匯入 vee-validate 主套件
 import * as veeValidate from 'vee-validate';
 
+// CKEditor
+import CKEditor from '@ckeditor/ckeditor5-vue';
+
 // 匯入 vee-validate 相關規則
 import AllRules from '@vee-validate/rules';
 
@@ -48,6 +51,7 @@ app.config.globalProperties.$filters = {
 
 app.use(router);
 app.use(VueAxios, axios);
+app.use(CKEditor);
 
 app.component('VForm', veeValidate.Form);
 app.component('VField', veeValidate.Field);

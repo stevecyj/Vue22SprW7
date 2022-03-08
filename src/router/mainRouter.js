@@ -60,6 +60,13 @@ export default [
         component: () =>
           import(/* webpackChunkName: "AdminCoupon" */ '../views/BackStage/AdminCoupon.vue'),
       },
+
+      {
+        path: 'articles',
+        name: 'AdminArticles',
+        component: () =>
+          import(/* webpackChunkName: "AdminArticles" */ '../views/BackStage/AdminArticles.vue'),
+      },
     ],
   },
   {
