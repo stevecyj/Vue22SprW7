@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import AdminNavbar from '@/components/AdminNavbar.vue';
+import AdminNavbar from '@/components/Navbar/AdminNavbar.vue';
 import emitter from '@/libs/emitter'; // 使用 provide
 import $httpMessageState from '@/libs/pushMessageState';
 import ToastMessages from '@/components/ToastMessages.vue';

@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import FrontNavbar from '@/components/FrontNavbar.vue';
+import FrontNavbar from '@/components/Navbar/FrontNavbar.vue';
 
 export default {
   name: 'FrontView.vue',
