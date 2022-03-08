@@ -52,6 +52,7 @@
 import CouponModal from '@/components/Modals/CouponModal.vue';
 import DelModal from '@/components/Modals/DelModal.vue';
 
+// 統一放到 libs 裡
 // function pushMessageState(response, title = '更新') {
 //   if (response.data.success) {
 //     this.emitter.emit('push-message', {
@@ -69,6 +70,7 @@ import DelModal from '@/components/Modals/DelModal.vue';
 
 export default {
   components: { CouponModal, DelModal },
+  inject: ['emitter', '$httpMessageState'],
   props: {
     config: Object,
   },
@@ -116,7 +118,7 @@ export default {
         })
         .catch((error) => {
           this.isLoading = false;
-          console.log(error.response, '錯誤訊息');
+          this.$httpMessageState(error.response, '錯誤訊息');
         });
     },
     updateCoupon(tempCoupon) {
@@ -134,13 +136,13 @@ export default {
       this.$http[httpMethos](url, { data })
         .then((response) => {
           this.isLoading = false;
-          console.log(response, '新增優惠券');
+          this.$httpMessageState(response, '新增優惠券');
           this.getCoupons();
           this.$refs.couponModal.hideModal();
         })
         .catch((error) => {
           this.isLoading = false;
-          console.log(error.response, '錯誤訊息');
+          this.$httpMessageState(error.response, '錯誤訊息');
         });
     },
     delCoupon() {
@@ -150,14 +152,14 @@ export default {
         .delete(url)
         .then((response) => {
           this.isLoading = false;
-          console.log(response, '刪除優惠券');
+          this.$httpMessageState(response, '刪除優惠券');
           const delComponent = this.$refs.delModal;
           delComponent.hideModal();
           this.getCoupons();
         })
         .catch((error) => {
           this.isLoading = false;
-          console.log(error.response, '刪除優惠券');
+          this.$httpMessageState(error.response, '刪除優惠券');
         });
     },
   },
